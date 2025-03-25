@@ -21,6 +21,7 @@ services:
       OAUTH_CLIENT_SECRET: ${OAUTH_CLIENT_SECRET}
       # Dynamically construct the OpenID Provider URL using the provided settings:
       # PROTOCOL, HOST_ADDRESS, PORT, and REALM.
+      # Note: You may choose to remove HOST_ADDRESS:PORT for Keycloak domain instead
       OPENID_PROVIDER_URL: ${PROTOCOL}://${HOST_ADDRESS}:${PORT}/realms/${REALM}/.well-known/openid-configuration
       OAUTH_PROVIDER_NAME: ${OAUTH_PROVIDER_NAME}
       ENABLE_OAUTH_SIGNUP: ${ENABLE_OAUTH_SIGNUP}
