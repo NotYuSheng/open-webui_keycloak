@@ -1,6 +1,6 @@
 # open-webui_keycloak
 
-A Docker Compose setup that integrates Keycloak (an open-source identity and access management solution) with the open-webui secure interface. This project provides a ready-to-run environment for managing authentication via OAuth and OpenID Connect.
+A Docker Compose setup that integrates [Keycloak](https://www.keycloak.org/getting-started/getting-started-docker) (an open-source identity and access management solution) with the [open-webui](https://github.com/open-webui/open-webui) interface. This project provides a ready-to-run environment for managing authentication via OAuth and OpenID Connect.
 
 ## Prerequisites
 - Docker
