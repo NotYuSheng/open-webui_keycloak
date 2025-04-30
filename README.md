@@ -24,7 +24,7 @@ A Docker Compose setup that integrates [Keycloak](https://www.keycloak.org/getti
 3. **Run Docker Compose**
    Start the services with:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
    Docker Compose will automatically load the environment variables from the `.env` file.
 
