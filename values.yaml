@@ -1,0 +1,133 @@
+nameOverride: ""
+namespaceOverride: ""
+
+clusterDomain: cluster.local
+
+annotations: {}
+podAnnotations: {}
+podLabels: {}
+
+replicaCount: 1
+strategy: {}
+
+image:
+  repository: ghcr.io/notyusheng/open-webui_webwork
+  tag: "v1.5.1"
+  pullPolicy: "Never"
+
+serviceAccount:
+  enable: true
+  name: ""
+  annotations: {}
+  automountServiceAccountToken: false
+
+imagePullSecrets: []
+
+resources: {}
+
+copyAppData:
+  resources: {}
+
+managedCertificate:
+  enabled: false
+
+ingress:
+  enabled: false
+
+persistence:
+  enabled: true
+  size: 2Gi
+  existingClaim: ""
+  subPath: ""
+  accessModes:
+    - ReadWriteOnce
+  storageClass: ""
+  selector: {}
+  annotations: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+topologySpreadConstraints: []
+hostAliases: []
+
+service:
+  type: ClusterIP
+  annotations: {}
+  port: 80
+  containerPort: 8080
+  nodePort: ""
+  labels: {}
+  loadBalancerClass: ""
+
+volumeMounts:
+  initContainer: []
+  container: []
+
+
+extraResources:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: open-webui-deployment
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: open-webui
+      template:
+        metadata:
+          labels:
+            app: open-webui
+        spec:
+          containers:
+            - name: open-webui
+              image: ghcr.io/notyusheng/open-webui_webwork:v1.5.1
+              env:
+                - name: OAUTH_CLIENT_ID
+                  value: "open-webui"  # ✅ Match Keycloak clientId
+                - name: OAUTH_CLIENT_SECRET
+                  value: "your-client-secret"  # In Keycloak GUI: Go to Clients → open-webui → Credentials tab # Also, please change this in realm-export.json before importing it under "secret": "your-client-secret"
+                - name: OPENID_PROVIDER_URL
+                  value: "http://keycloak.keycloak.svc.cluster.local/realms/open-webui/.well-known/openid-configuration"
+                - name: OAUTH_SCOPES
+                  value: "openid email profile"
+                - name: ENABLE_OAUTH_SIGNUP
+                  value: "true"
+
+
+
+# This is a sample configuration for deploying Open Web UI with Keycloak integration.
+# The following configuration is for a Helm chart values.yaml file.
+# It includes the necessary environment variables for OAuth authentication with Keycloak.
+# Make sure to replace the placeholders with your actual Keycloak configuration.
+
+# extraResources:
+#   - apiVersion: apps/v1
+#     kind: Deployment
+#     metadata:
+#       name: open-webui-deployment
+#     spec:
+#       replicas: 1
+#       selector:
+#         matchLabels:
+#           app: open-webui
+#       template:
+#         metadata:
+#           labels:
+#             app: open-webui
+#         spec:
+#           containers:
+#             - name: open-webui
+#               image: ghcr.io/notyusheng/open-webui_webwork:v1.5.1
+#               env:
+#                 - name: OAUTH_CLIENT_ID
+#                   value: "openwebui" # Match keycloak client ID
+#                 - name: OAUTH_CLIENT_SECRET
+#                   value: "your-client-secret"  # Replace with actual secret
+#                 - name: OPENID_PROVIDER_URL
+#                   value: "https://keycloak.example.com/realms/myrealm/.well-known/openid-configuration"  # Replace with actual Keycloak domain
+#                 - name: OAUTH_SCOPES
+#                   value: "openid email profile"
+#                 - name: ENABLE_OAUTH_SIGNUP
+#                   value: "true"

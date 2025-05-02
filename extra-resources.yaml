@@ -1,0 +1,42 @@
+# {{- if .Values.extraResources }}
+# {{- range .Values.extraResources }}
+# ---
+# {{ toYaml . | nindent 0 }}
+# {{- end }}
+# {{- end }}
+
+{{- if .Values.extraResources }}
+{{- range .Values.extraResources }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-webui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: open-webui
+  template:
+    metadata:
+      labels:
+        app: open-webui
+    spec:
+      containers:
+        - name: open-webui
+          image: ghcr.io/notyusheng/open-webui_webwork:v1.5.1
+          env:
+            - name: OAUTH_CLIENT_ID
+              value: "open-webui"  # Match Keycloak client ID
+            - name: OAUTH_CLIENT_SECRET
+              value: "your-client-secret"  # Replace with actual secret from Keycloak client
+            - name: OPENID_PROVIDER_URL
+              value: "http://keycloak.keycloak.svc.cluster.local/realms/open-webui/.well-known/openid-configuration"  # Keycloak internal URL (adjust if using external)
+            - name: OAUTH_SCOPES
+              value: "openid email profile"
+            - name: ENABLE_OAUTH_SIGNUP
+              value: "true"
+{{- end }}
+{{- end }}
+
+

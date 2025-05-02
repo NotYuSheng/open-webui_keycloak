@@ -1,0 +1,34 @@
+{
+  "realm": "open-webui",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "open-webui",
+      "secret": "your-client-secret",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "redirectUris": [
+        "http://localhost:8080/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8080"
+      ],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true
+    }
+  ],
+  "users": [
+    {
+      "username": "open-webui",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "P@ssw0rd",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}
