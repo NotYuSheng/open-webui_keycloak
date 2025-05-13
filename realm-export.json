@@ -1,0 +1,26 @@
+{
+    "realm": "open-webui",
+    "enabled": true,
+    "clients": [
+      {
+        "clientId": "open-webui",
+        "secret": "your-client-secret",
+        "enabled": true,
+        "protocol": "openid-connect",
+        "publicClient": false,
+        "redirectUris": [
+          "http://localhost:8080/oauth/oidc/callback"
+        ],
+        "webOrigins": [
+          "http://localhost:8080"
+        ],
+        "standardFlowEnabled": true,
+        "directAccessGrantsEnabled": true,
+        "attributes": {
+          "post.logout.redirect.uris": "",
+          "oauth2.device.authorization.grant.enabled": "false"
+        }
+      }
+    ]
+  }
+  
